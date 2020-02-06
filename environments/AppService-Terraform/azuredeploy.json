@@ -80,17 +80,7 @@
                 "principalId": "[reference(resourceId('Microsoft.ContainerInstance/containerGroups', variables('containerGroupName')), '2018-10-01', 'Full').identity.principalId]",
                 "scope": "[resourceGroup().id]"
             }
-        },
-        {
-            "type": "Microsoft.CustomProviders/associations",
-            "apiVersion": "2018-09-01-preview",
-            "name": "TestTempAssoc",
-            "location": "[resourceGroup().location]",
-            "properties": {
-                "targetResourceId": "/subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/AAACustomRP/providers/Microsoft.CustomProviders/resourceProviders/TestJunkRPA",
-                "myCustomInputProperty": "[resourceGroup().id]"
-            }
-    }
+        }
     ],
     "outputs": {}
 }
