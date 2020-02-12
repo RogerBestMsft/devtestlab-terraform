@@ -21,6 +21,7 @@ while true; do
         export ARM_USE_MSI=true
         export ARM_MSI_ENDPOINT='http://169.254.169.254/metadata/identity/oauth2/token'
         export ARM_SUBSCRIPTION_ID=$(az account show --output=json | jq -r -M '.id')
+        export TF_LOG=trace
         break
     } || sleep 5    
 done
