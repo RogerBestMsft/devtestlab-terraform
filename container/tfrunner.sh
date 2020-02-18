@@ -21,6 +21,7 @@ while true; do
         export ARM_USE_MSI=true
         export ARM_MSI_ENDPOINT='http://169.254.169.254/metadata/identity/oauth2/token'
         export ARM_SUBSCRIPTION_ID=$(az account show --output=json | jq -r -M '.id')
+        export ARM_TENANT_ID=$(az account show --output=json | jq -r -M '.tenantId')
         export TF_LOG=trace
         break
     } || sleep 5    
@@ -30,7 +31,7 @@ trace "Wait for Azure deployment ..."
 az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --created
 
 trace "Initializing Terraform ..."
-terraform init
+terraform init -backend-config state.tf -reconfigure
 
 trace "Applying Terraform ..."
 terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
