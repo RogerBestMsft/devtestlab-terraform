@@ -17,7 +17,7 @@
         "resourcePrefix": "[concat('tfrunner-', uniqueString(resourceGroup().id, deployment().name))]",
         "containerGroupName": "[variables('resourcePrefix')]",
         "containerInstanceName": "[variables('resourcePrefix')]",
-        "containerImageName": "rbest/devtestlab-terraform",
+        "containerImageName": "RogerBestMSFT/devtestlab-terraform",
         "terraformRunbook": "[concat(parameters('_artifactsLocation'), '/azuredeploy.tf', parameters('_artifactsLocationSasToken'))]",
         "roleAssignmentName": "[guid(variables('roleDefinition_Contributor'), variables('containerGroupName'))]",
         "roleDefinition_Contributor": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]"
