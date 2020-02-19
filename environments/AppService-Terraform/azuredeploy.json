@@ -18,6 +18,7 @@
         "containerGroupName": "[variables('resourcePrefix')]",
         "containerInstanceName": "[variables('resourcePrefix')]",
         "containerImageName": "hashicorp/terraform",
+        "tfrunnerRunbook": "[concat(parameters('_artifactsLocation'), '/tfrunner.sh', parameters('_artifactsLocationSasToken'))]",
         "terraformRunbook": "[concat(parameters('_artifactsLocation'), '/azuredeploy.tf', parameters('_artifactsLocationSasToken'))]",
         "roleAssignmentName": "[guid(variables('roleDefinition_Contributor'), variables('containerGroupName'))]",
         "roleDefinition_Contributor": "[resourceId('Microsoft.Authorization/roleDefinitions', 'b24988ac-6180-42a0-ab88-20f7382dd24c')]"
@@ -37,7 +38,7 @@
                         "name": "[variables('containerInstanceName')]",
                         "properties": {
                             "command": [
-                                "tfrunner",
+                                "[variables('tfrunnerRunbook')]",
                                 "[variables('terraformRunbook')]"
                             ],
                             "image": "[variables('containerImageName')]",
