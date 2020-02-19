@@ -32,7 +32,7 @@ az group deployment wait --resource-group $EnvironmentResourceGroupName --name $
 
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
-trace "RBEST Initializing Terraform ..."
+trace "RBEST A Initializing Terraform ..."
 
 trace "Applying Terraform ..."
 terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
