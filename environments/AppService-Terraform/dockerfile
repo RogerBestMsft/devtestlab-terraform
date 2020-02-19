@@ -1,0 +1,15 @@
+FROM hashicorp/terraform:light
+WORKDIR /
+
+RUN apk update && \
+    apk add bash jq py-pip && \
+    apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
+    pip install --upgrade pip && \
+    pip install azure-cli && \
+    apk del --purge build
+
+COPY tfrunner.sh /terraform/tfrunner
+RUN chmod +x /terraform/tfrunner
+ENV PATH="/terraform:${PATH}"
+
+ENTRYPOINT [ "tfrunner" ]
