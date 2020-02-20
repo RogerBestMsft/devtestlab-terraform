@@ -6,6 +6,9 @@
             "type": "bool",
             "defaultValue": true
         },
+        "CRPassword": {
+            "type": "securestring"
+        },
         "_artifactsLocation": {
             "type": "string"
         },
@@ -17,6 +20,8 @@
         "resourcePrefix": "[concat('tfrunner-', uniqueString(resourceGroup().id, deployment().name))]",
         "containerGroupName": "[variables('resourcePrefix')]",
         "containerInstanceName": "[variables('resourcePrefix')]",
+        "registryName": "armorecreg",
+        "registryLoginServer" : "armorecreg.azurecr.io",
         "containerImageName": "armorecreg.azurecr.io/devtestlab-terraform",
         "terraformRunbook": "[concat(parameters('_artifactsLocation'), '/azuredeploy.tf', parameters('_artifactsLocationSasToken'))]",
         "roleAssignmentName": "[guid(variables('roleDefinition_Contributor'), variables('containerGroupName'))]",
@@ -62,6 +67,13 @@
                                 }
                             ]
                         }
+                    }
+                ],
+                "imageRegistryCredentials": [
+                    {
+                      "server": "[variables('registryLoginServer')]",
+                      "username": "[variables('registryName')]",
+                      "password": "[parameters('CRPassword')]"
                     }
                 ],
                 "osType": "Linux",
