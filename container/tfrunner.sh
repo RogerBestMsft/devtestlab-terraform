@@ -6,10 +6,12 @@ trace() {
 }
 
 trace "Setup folder structure ..."
-mkdir /runbooks && cd /runbooks
+mkdir /runbooks 
+cd /runbooks
 
-trace "Downloading runbooks ..."
-for url in $*; do wget ${url}; done
+//trace "Downloading runbooks ..."
+#for url in $*; do wget ${url}; done
+
 
 trace "Cleanup runbooks ..."
 for file in $(find -type f -name "*\?*"); do mv $file $(echo $file | cut -d? -f1); done
@@ -27,12 +29,17 @@ while true; do
     } || sleep 5    
 done
 
+export ARM_STORAGE_CONTAINER='https://crpstoretcspbmuiw6fc2.blob.core.windows.net/environments-src-files/'
+
+
+trace "Downloading storage files"
+az storage blob download -s $ARM_STORAGE_CONTAINER -d ./local --pattern /subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/testcustomrp-EchoEnv-669175/*.*
+
 trace "Wait for Azure deployment ..."
 az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --created
 
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
-trace "RBEST D Initializing Terraform ..."
 
 trace "Applying Terraform ..."
 terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
