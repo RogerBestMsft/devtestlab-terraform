@@ -10,7 +10,8 @@ cd /runbooks
 
 #trace "Downloading runbooks ..."
 #for url in $*; do wget ${url}; done
-
+STORAGE_PREFIX=$1
+echo "TEST1: $STORAGE_PREFIX"
 
 trace "Cleanup runbooks ..."
 for file in $(find -type f -name "*\?*"); do mv $file $(echo $file | cut -d? -f1); done
@@ -28,11 +29,15 @@ while true; do
     } || sleep 5    
 done
 
-export ARM_STORAGE_CONTAINER='https://crpstoretcspbmuiw6fc2.blob.core.windows.net/environments-src-files/'
+trace "Connecting AZ Copy ..."
+azcopy login --identity
 
+trace "Copying files locally ..."
+azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$ARM_STORAGE_CONTAINER/$STORAGE_PREFIX/*" "." --recursive
 
-trace "Downloading storage files"
-az storage blob download -s $ARM_STORAGE_CONTAINER -d ./local --pattern /subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/testcustomrp-EchoEnv-669175/*.*
+#trace "Get storage files"
+#az storage blob download -s $ARM_STORAGE_CONTAINER -d ./local --pattern /subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/testcustomrp-EchoEnv-669175/*.*
+#FileArray = az storage blob list --container-name $ARM_STORAGE_CONTAINER --prefix $STORAGE_PREFIX --query "[].{name:name}" -o tsv
 
 trace "Wait for Azure deployment ..."
 az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --created
