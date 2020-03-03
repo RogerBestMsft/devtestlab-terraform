@@ -1,20 +1,12 @@
 FROM hashicorp/terraform:light
 WORKDIR /
 
-RUN apt-get update \
-    && apt-get install -y --no-install-recommends \
-         rsync \
-         libunwind8 \
-    && rm -rf /var/lib/apt/lists/*
+RUN apk add --no-cache wget \
+&&	wget https://aka.ms/downloadazcopy-v10-linux -O /tmp/azcopy.tgz \
+&&	export BIN_LOCATION=$(tar -tzf /tmp/azcopy.tgz | grep "/azcopy") \
+&&	tar -xzf /tmp/azcopy.tgz $BIN_LOCATION --strip-components=1 -C /usr/bin
 
-RUN set -ex \
-    && curl -L -o azcopy.tar.gz \
-    https://aka.ms/downloadazcopy-v10-linux \
-    && tar -xf azcopy.tar.gz && rm -f azcopy.tar.gz \
-    && ./install.sh && rm -f install.sh \
-    && rm -rf azcopy
-
-CMD ["azcopy", "--version"]
+COPY --from=azcopy /usr/bin/azcopy /usr/bin/azcopy
 
 RUN apk update && \
     apk add bash jq py-pip && \
