@@ -9,7 +9,7 @@ trace "Setup folder structure ..."
 mkdir /runbooks 
 cd /runbooks
 
-//trace "Downloading runbooks ..."
+#trace "Downloading runbooks ..."
 #for url in $*; do wget ${url}; done
 
 
