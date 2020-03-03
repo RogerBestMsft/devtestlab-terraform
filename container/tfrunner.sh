@@ -4,7 +4,6 @@ trace() {
     TRACE_DATE=$(date '+%F %T.%N')
     echo ">>> $TRACE_DATE: $@"
 }
-
 trace "Setup folder structure ..."
 mkdir /runbooks 
 cd /runbooks
