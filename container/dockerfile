@@ -3,6 +3,7 @@ WORKDIR /
 RUN apk update && \
     apk add bash jq py-pip && \
     apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
+    apk add libc6-compat && \
     pip install --upgrade pip && \
     pip install azure-cli && \
     apk add --no-cache wget && \
