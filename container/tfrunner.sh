@@ -4,6 +4,9 @@ trace() {
     TRACE_DATE=$(date '+%F %T.%N')
     echo ">>> $TRACE_DATE: $@"
 }
+
+export STORAGE_PREFIX=$1
+
 trace "Setup folder structure ..."
 mkdir /runbooks 
 cd /runbooks
@@ -28,7 +31,7 @@ trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
 
 trace "Copying files locally ..."
-azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$ARM_STORAGE_CONTAINER$STORAGE_PREFIX/*" "." --recursive
+azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$ARM_STORAGE_CONTAINER$STORAGE_PREFIX/*" "*" --recursive
 
 trace "Wait for Azure deployment ..."
 az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --created
@@ -46,4 +49,5 @@ else
     trace "Deleting container groups ..."
     az container delete --yes --ids $ContainerGroupId
 fi
+trace "Set the readiness probe file ..."
 touch /tmp/ready
