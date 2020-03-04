@@ -30,11 +30,10 @@ done
 trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
 
-trace export
-trace "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$ARM_STORAGE_CONTAINER$STORAGE_PREFIX/*"
+trace "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$ARM_STORAGE_CONTAINER$STORAGE_PREFIX/*"
 
 trace "Copying files locally ..."
-azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$ARM_STORAGE_CONTAINER$STORAGE_PREFIX/*" "*" --recursive
+azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$ARM_STORAGE_CONTAINER$STORAGE_PREFIX/*" "*" --recursive
 
 trace "Wait for Azure deployment ..."
 az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --created
