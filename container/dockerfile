@@ -6,8 +6,6 @@ RUN apk add --no-cache wget \
 &&	export BIN_LOCATION=$(tar -tzf /tmp/azcopy.tgz | grep "/azcopy") \
 &&	tar -xzf /tmp/azcopy.tgz $BIN_LOCATION --strip-components=1 -C /usr/bin
 
-COPY --from=azcopy /usr/bin/azcopy /usr/bin/azcopy
-
 RUN apk update && \
     apk add bash jq py-pip && \
     apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
