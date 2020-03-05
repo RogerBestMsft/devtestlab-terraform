@@ -1,5 +1,5 @@
 #!/bin/sh
-
+/usr/bin/keyctl new_session
 trace() {
     TRACE_DATE=$(date '+%F %T.%N')
     echo ">>> $TRACE_DATE: $@"
