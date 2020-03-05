@@ -6,7 +6,7 @@ trace() {
 }
 
 export STORAGE_PREFIX=$1
-
+export APPLY_DEPLOYMENT=true
 trace "Setup folder structure ..."
 mkdir /runbooks 
 cd /runbooks
@@ -44,8 +44,14 @@ az group deployment wait --resource-group $EnvironmentResourceGroupName --name $
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
 
-trace "Applying Terraform ..."
-terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+trace "Checking to apply or destroy ..."
+if [$APPLY_DEPLOYMENT]; then
+    trace "Applying Terraform ..."
+    terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+else
+    trace "Deleting Terraform ..."
+    terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+fi
 
 if [ -z "$ContainerGroupId" ]; then
     trace "Completed ..."
