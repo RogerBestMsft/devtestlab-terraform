@@ -36,7 +36,7 @@ trace "$STORAGE_PREFIX"
 trace "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
 
 trace "Copying files locally ..."
-azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*" "*" --recursive
+azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*" "/runbooks" --recursive
 
 trace "Wait for Azure deployment ..."
 az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --created
