@@ -30,6 +30,9 @@ done
 trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
 
+trace "$AZURE_STORAGE_ACCOUNT"
+trace "$ARM_STORAGE_CONTAINER"
+trace "$STORAGE_PREFIX"
 trace "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$ARM_STORAGE_CONTAINER$STORAGE_PREFIX/*"
 
 trace "Copying files locally ..."
