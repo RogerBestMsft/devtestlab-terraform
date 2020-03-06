@@ -1,5 +1,5 @@
 #!/bin/sh
-/usr/bin/keyctl new_session
+
 trace() {
     TRACE_DATE=$(date '+%F %T.%N')
     echo ">>> $TRACE_DATE: $@"
@@ -14,18 +14,18 @@ cd /runbooks
 trace "Cleanup runbooks ..."
 for file in $(find -type f -name "*\?*"); do mv $file $(echo $file | cut -d? -f1); done
 
-trace "Connecting Azure ..."
-while true; do
+#trace "Connecting Azure ..."
+#while true; do
     # managed identity isn't avaialble directly - retry
-    az login --identity -u $EnvironmentUserId 2>/dev/null && {
-        export ARM_USE_MSI=true
-        export ARM_MSI_ENDPOINT='http://169.254.169.254/metadata/identity/oauth2/token'
-        export ARM_SUBSCRIPTION_ID=$(az account show --output=json | jq -r -M '.id')
-        export ARM_TENANT_ID=$(az account show --output=json | jq -r -M '.tenantId')
-        export TF_LOG=trace
-        break
-    } || sleep 5    
-done
+#    az login --identity -u $EnvironmentUserId 2>/dev/null && {
+#        export ARM_USE_MSI=true
+#        export ARM_MSI_ENDPOINT='http://169.254.169.254/metadata/identity/oauth2/token'
+#        export ARM_SUBSCRIPTION_ID=$(az account show --output=json | jq -r -M '.id')
+#        export ARM_TENANT_ID=$(az account show --output=json | jq -r -M '.tenantId')
+#        export TF_LOG=trace
+#        break
+#    } || sleep 5    
+#done
 
 trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
