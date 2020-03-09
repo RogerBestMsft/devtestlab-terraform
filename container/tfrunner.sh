@@ -7,9 +7,9 @@ trace() {
 
 export STORAGE_PREFIX=$1
 export APPLY_DEPLOYMENT=true
-trace "Setup folder structure ..."
-mkdir /runbooks 
-cd /runbooks
+#trace "Setup folder structure ..."
+#mkdir /runbooks 
+#cd /runbooks
 
 #trace "Cleanup runbooks ..."
 #for file in $(find -type f -name "*\?*"); do mv $file $(echo $file | cut -d? -f1); done
@@ -27,7 +27,7 @@ cd /runbooks
 #    } || sleep 5    
 #done
 
-trace $EnvironmentUserId
+#trace $EnvironmentUserId
 
 trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
