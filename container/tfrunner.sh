@@ -39,7 +39,7 @@ azcopy login --identity --identity-resource-id $EnvironmentUserId
 
 trace "Copying files locally ..."
 #azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*" "." --recursive
-azcopy copy "https://crpstoretcspbmuiw6fc2.blob.core.windows.net/environments-src-files/subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/testcustomrp-BravoEnv-035234/*" "." --recursive
+azcopy copy "https://crpstoretcspbmuiw6fc2.blob.core.windows.net/environments-src-files/subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/testcustomrp-BravoEnv-035234/*" "/runbooks" --recursive
 #trace "Wait for Azure deployment ..."
 #az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --exists
 
