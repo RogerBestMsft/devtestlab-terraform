@@ -36,7 +36,7 @@ azcopy login --identity --identity-resource-id $EnvironmentUserId
 #trace "$AZURE_STORAGE_CONTAINER"
 #trace "$STORAGE_PREFIX"
 trace "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
-export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
+export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
 trace $SOURCE_URI
 trace "Copying files locally ..."
 azcopy copy $SOURCE_URI "/runbooks" --recursive
