@@ -11,8 +11,8 @@ trace "Setup folder structure ..."
 mkdir /runbooks 
 cd /runbooks
 
-trace "Cleanup runbooks ..."
-for file in $(find -type f -name "*\?*"); do mv $file $(echo $file | cut -d? -f1); done
+#trace "Cleanup runbooks ..."
+#for file in $(find -type f -name "*\?*"); do mv $file $(echo $file | cut -d? -f1); done
 
 trace "Connecting Azure ..."
 while true; do
