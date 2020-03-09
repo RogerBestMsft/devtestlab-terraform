@@ -1,9 +1,9 @@
 #!/bin/sh
 
-#trace() {
-#    TRACE_DATE=$(date '+%F %T.%N')
-#    echo ">>> $TRACE_DATE: $@"
-#}
+trace() {
+    TRACE_DATE=$(date '+%F %T.%N')
+    echo ">>> $TRACE_DATE: $@"
+}
 
 #export STORAGE_PREFIX=$1
 #export APPLY_DEPLOYMENT=true
