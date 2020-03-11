@@ -67,4 +67,4 @@ else
     az container delete --yes --ids $ContainerGroupId
 fi
 trace "Set the readiness probe file ..."
-touch /tmp/ready
+echo 'Completed' > ready.txt
