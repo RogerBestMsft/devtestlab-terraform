@@ -45,7 +45,7 @@ trace "Wait for Azure deployment ..."
 az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --exists
 
 trace "Sleeping ..."
-sleep 20
+sleep 30
 
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
