@@ -41,7 +41,7 @@ azcopy copy $SOURCE_URI "/runbooks" --recursive
 #az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --exists
 
 trace "Sleeping ..."
-sleep 20
+sleep 120
 
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
@@ -53,7 +53,6 @@ if ["$DEPLOYMENT_TYPE" = "create"]; then
 else
     trace "Deleting Terraform ..."
     terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
-fi
 
 if [ -z "$ContainerGroupId" ]; then
     trace "Completed ..."
@@ -61,6 +60,5 @@ else
     trace "Deleting container groups ..."
     az container delete --yes --ids $ContainerGroupId
 fi
-
 trace "Set the readiness probe file ..."
 echo 'Completed' > ready.txt
