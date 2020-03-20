@@ -53,6 +53,7 @@ if ["$DEPLOYMENT_TYPE" = "create"]; then
 else
     trace "Deleting Terraform ..."
     terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+fi
 
 if [ -z "$ContainerGroupId" ]; then
     trace "Completed ..."
