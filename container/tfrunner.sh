@@ -5,11 +5,9 @@ trace() {
     echo ">>> $TRACE_DATE: $@"
 }
 
-#export STORAGE_PREFIX=$1
-#export DEPLOYMENT_TYPE="create"
 trace "Deployment Type: $DEPLOYMENT_TYPE"
-trace "Prefix: $STORAGE_PREFIX"
-trace "EnvRG: $EnvironmentResourceGroupName"
+#trace "Prefix: $STORAGE_PREFIX"
+#trace "EnvRG: $EnvironmentResourceGroupName"
 trace "Setup folder structure ..."
 mkdir /runbooks 
 cd ./runbooks
@@ -34,7 +32,7 @@ trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
 
 export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
-trace $SOURCE_URI
+trace "SourceURI: $SOURCE_URI"
 trace "Copying files locally ..."
 azcopy copy $SOURCE_URI "/runbooks" --recursive
 #azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*" "/runbooks" --recursive
@@ -49,16 +47,16 @@ sleep 10
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
 
-export DEPLOY_CREATE="create"
-trace "Before apply or destroy: $DEPLOYMENT_TYPE equal $DEPLOY_CREATE"
+#export DEPLOY_CREATE="create"
+trace "Before apply or destroy: $DEPLOYMENT_TYPE "
 trace "Checking to apply or destroy ..."
-#if ["$DEPLOYMENT_TYPE"="$DEPLOY_CREATE"]; then
+if [$DEPLOYMENT_TYPE == "create"]; then
     trace "Applying Terraform ..."
     terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
-#else
-#    trace "Deleting Terraform ..."
-#    terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
-#fi
+else
+    trace "Deleting Terraform ..."
+    terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+fi
 
 if [ -z "$ContainerGroupId" ]; then
     trace "Completed ..."
