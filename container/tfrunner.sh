@@ -5,9 +5,10 @@ trace() {
     echo ">>> $TRACE_DATE: $@"
 }
 
-export STORAGE_PREFIX=$1
+#export STORAGE_PREFIX=$1
 #export DEPLOYMENT_TYPE="create"
 trace "Deployment Type: $DEPLOYMENT_TYPE"
+trace "Prefix: $STORAGE_PREFIX"
 trace "EnvRG: $EnvironmentResourceGroupName"
 trace "Setup folder structure ..."
 mkdir /runbooks 
