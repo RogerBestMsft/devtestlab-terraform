@@ -48,8 +48,10 @@ sleep 10
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
 
+export DEPLOY_CREATE="create"
+trace "Before apply or destroy: $DEPLOYMENT_TYPE equal $DEPLOY_CREATE"
 trace "Checking to apply or destroy ..."
-if ["$DEPLOYMENT_TYPE" = "create"]; then
+if [["$DEPLOYMENT_TYPE" == "$DEPLOY_CREATE"]]; then
     trace "Applying Terraform ..."
     terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
 else
