@@ -42,7 +42,13 @@ azcopy copy $SOURCE_URI "/runbooks" --recursive
 #az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --exists
 
 trace "Sleeping ..."
-sleep 10
+sleep 20
+while true: do
+    curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com/&client_id=$CLIENT_ID" 2>/dev/null && {
+        trace "in loop ******************"
+    } || sleep 5
+done    
+#az role assignment list --all --assignee $EnvironmentUserId
 
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
