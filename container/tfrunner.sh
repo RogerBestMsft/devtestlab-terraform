@@ -7,6 +7,8 @@ trace() {
 
 export STORAGE_PREFIX=$1
 #export DEPLOYMENT_TYPE="create"
+trace "Deployment Type: $DEPLOYMENT_TYPE"
+trace "EnvRG: $EnvironmentResourceGroupName"
 trace "Setup folder structure ..."
 mkdir /runbooks 
 cd ./runbooks
@@ -41,7 +43,7 @@ azcopy copy $SOURCE_URI "/runbooks" --recursive
 #az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --exists
 
 trace "Sleeping ..."
-sleep 120
+sleep 10
 
 trace "Initializing Terraform ..."
 terraform init -backend-config state.tf -reconfigure
