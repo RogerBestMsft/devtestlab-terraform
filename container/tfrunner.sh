@@ -18,7 +18,7 @@ for file in $(find -type f -name "*\?*"); do mv $file $(echo $file | cut -d? -f1
 trace "Connecting Azure ..."
 while true; do
     # managed identity isn't avaialble directly - retry
-    az login --identity 2>/dev/null && {
+    az login --identity -u $EnvironmentUserId 2>/dev/null && {
         export ARM_USE_MSI=true
         export ARM_MSI_ENDPOINT='http://169.254.169.254/metadata/identity/oauth2/token'
         export ARM_SUBSCRIPTION_ID=$(az account show --output=json | jq -r -M '.id')
@@ -41,9 +41,9 @@ azcopy copy $SOURCE_URI "/runbooks" --recursive
 #trace "Wait for Azure deployment ..."
 #az group deployment wait --resource-group $EnvironmentResourceGroupName --name $EnvironmentDeploymentName --exists
 
-trace "Sleeping ..."
-sleep 20
-trace "Client ID: $CLIENT_ID"
+#trace "Sleeping ..."
+#sleep 20
+#trace "Client ID: $CLIENT_ID"
 #while true: do
 #    az role assignment list --assignee 
     #curl -H Metadata:true "http://169.254.169.254/metadata/identity/oauth2/token?api-version=2018-02-01&resource=https%3A%2F%2Fmanagement.azure.com/&client_id=$CLIENT_ID" 2>/dev/null && {
