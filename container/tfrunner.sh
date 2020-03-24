@@ -58,13 +58,13 @@ terraform init -backend-config state.tf -reconfigure
 #export DEPLOY_CREATE="create"
 trace "Before apply or destroy: $DEPLOYMENT_TYPE "
 trace "Checking to apply or destroy ..."
-if [$DEPLOYMENT_TYPE == "create"]; then
+#if [$DEPLOYMENT_TYPE == "create"]; then
     trace "Applying Terraform ..."
     terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
-else
-    trace "Deleting Terraform ..."
-    terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
-fi
+#else
+#    trace "Deleting Terraform ..."
+#    terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+#fi
 
 if [ -z "$ContainerGroupId" ]; then
     trace "Completed ..."
