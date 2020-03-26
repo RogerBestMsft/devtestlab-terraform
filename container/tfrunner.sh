@@ -64,6 +64,8 @@ trace "Checking to apply or destroy ..."
 if [ -z "$DEPLOYMENT_TYPE" ]; then
     trace "Deleting Terraform ..."
     terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+    trace "Deleting Storage files"
+    az storage azcopy blob delete -c $AZURE_STORAGE_CONTAINER --account-name $AZURE_STORAGE_ACCOUNT -t $STORAGE_PREFIX --recursive
 else
     trace "Applying Terraform ..."
     terraform apply -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
