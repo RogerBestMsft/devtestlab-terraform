@@ -31,21 +31,15 @@ done
 trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
 
-trace "List Blobs"
-az storage blob list -c $AZURE_STORAGE_CONTAINER --prefix $STORAGE_PREFIX
-
 trace "Set SOURCE_URI"
 export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
 trace "SourceURI: $SOURCE_URI"
 trace "Copying files locally ..."
-azcopy copy $SOURCE_URI "/runbooks" --recursive
+
+azcopy copy "$SOURCE_URI" "/runbooks" --blob-type Detect --recursive --log-level INFO --overwrite true
 
 sleep 60
 
-trace "Download blob batch"
-az storage blob download-batch -d "/runbooks" -s $AZURE_STORAGE_CONTAINER --pattern "$STORAGE_PREFIX/*"
-
-sleep 60
 
 #azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*" "/runbooks" --recursive
 #azcopy copy "https://crpstoretcspbmuiw6fc2.blob.core.windows.net/environments-src-files/subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/testcustomrp-BravoEnv-035234/*" "/runbooks" --recursive
