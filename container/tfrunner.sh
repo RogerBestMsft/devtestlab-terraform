@@ -37,7 +37,7 @@ trace "SourceURI: $SOURCE_URI"
 
 trace "Copying files locally ..."
 
-azcopy copy "$SOURCE_URI" "/runbooks" --recursive --log-level INFO --overwrite true
+azcopy copy "$SOURCE_URI" "\runbooks" --overwrite=prompt --recursive --from-to=BlobLocal --check-md5 "FailIfDifferent" --log-level INFO
 
 #sleep 60
 
