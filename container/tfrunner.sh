@@ -29,7 +29,7 @@ while true; do
 done
 
 trace "Connecting AZ Copy ..."
-azcopy login --identity --identity-resource-id $EnvironmentUserId
+azcopy login --identity --identity-resource-id $EnvironmentUserId --tenantId=$ARM_TENANT_ID
 
 trace "Set SOURCE_URI"
 export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
@@ -37,13 +37,13 @@ trace "SourceURI: $SOURCE_URI"
 
 trace "Copying files locally ..."
 
-#azcopy copy "$SOURCE_URI" "/runbooks" --overwrite=prompt --recursive --from-to=BlobLocal --check-md5 "FailIfDifferent" --log-level INFO
-
-#sleep 10
-
-az storage blob download-batch -d '/runbooks' -s $AZURE_STORAGE_CONTAINER --pattern $STORAGE_PREFIX --account-name $AZURE_STORAGE_ACCOUNT --account-key $AZURE_STORAGE_KEY
+azcopy copy "$SOURCE_URI" "/runbooks" --overwrite=prompt --recursive --from-to=BlobLocal --check-md5 "FailIfDifferent" --log-level INFO
 
 sleep 10
+
+#az storage blob download-batch -d '/runbooks' -s $AZURE_STORAGE_CONTAINER --pattern $STORAGE_PREFIX --account-name $AZURE_STORAGE_ACCOUNT --account-key $AZURE_STORAGE_KEY
+
+#sleep 10
 
 #azcopy copy "https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*" "/runbooks" --recursive
 #azcopy copy "https://crpstoretcspbmuiw6fc2.blob.core.windows.net/environments-src-files/subscriptions/da8f3095-ac12-4ef2-9b35-fcd24842e207/resourceGroups/testcustomrp-BravoEnv-035234/*" "/runbooks" --recursive
