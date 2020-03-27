@@ -32,7 +32,7 @@ trace "Connecting AZ Copy ..."
 azcopy login --identity --identity-resource-id $EnvironmentUserId
 
 trace "Set SOURCE_URI"
-export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
+export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/?sv=2019-02-02&ss=bfqt&srt=sco&sp=rwdlacup&se=2020-04-01T02:51:38Z&st=2020-03-27T18:51:38Z&spr=https&sig=iBXi%2F9FBuBXLkl2oqMH%2Bhsx%2BDOjN4Rr1%2FSKfmiOptCo%3D"
 trace "SourceURI: $SOURCE_URI"
 
 trace "Copying files locally ..."
