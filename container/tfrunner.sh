@@ -39,7 +39,7 @@ trace "Copying files locally ..."
 
 azcopy copy "$SOURCE_URI" "\runbooks" --overwrite=prompt --recursive --from-to=BlobLocal --check-md5 "FailIfDifferent" --log-level INFO
 
-#sleep 60
+sleep 10
 
 #az storage blob download-batch -d '/runbooks' -s $AZURE_STORAGE_CONTAINER --pattern $STORAGE_PREFIX --account-name $AZURE_STORAGE_ACCOUNT
 
