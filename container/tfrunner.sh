@@ -29,7 +29,7 @@ while true; do
 done
 
 trace "Connecting AZ Copy ..."
-azcopy login --identity --identity-resource-id $EnvironmentUserId --tenantId $ARM_TENANT_ID
+azcopy login --identity --identity-resource-id $EnvironmentUserId --tenant-id $ARM_TENANT_ID
 
 trace "Set SOURCE_URI"
 export SOURCE_URI="https://$AZURE_STORAGE_ACCOUNT.blob.core.windows.net/$AZURE_STORAGE_CONTAINER$STORAGE_PREFIX/*"
