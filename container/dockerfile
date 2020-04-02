@@ -4,9 +4,9 @@ RUN apk update && \
     apk add bash jq python3 py3-pip && \
     apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
     apk add libc6-compat && \
-    pip install --upgrade pip && \
-    pip install --pre azure-cli && \
-    pip install azure-cli && \
+    pip3 install --upgrade pip3 && \
+    pip3 install --pre azure-cli && \
+    pip3 install azure-cli && \
     apk add --no-cache wget && \
     wget https://aka.ms/downloadazcopy-v10-linux -O /tmp/azcopy.tgz && \
 	export BIN_LOCATION=$(tar -tzf /tmp/azcopy.tgz | grep "/azcopy") && \
