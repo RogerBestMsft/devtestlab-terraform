@@ -1,6 +1,7 @@
 FROM hashicorp/terraform:light
 WORKDIR /
 RUN apk update && \
+    apk add python3 py3-pip && \
     apk add bash jq py-pip && \
     apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
     apk add libc6-compat && \    
