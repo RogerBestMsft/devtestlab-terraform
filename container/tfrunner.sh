@@ -86,4 +86,4 @@ else
 fi
 trace "Set the readiness probe file ..."
 echo 'Completed' > ready.txt
-#tail -f /dev/null
+tail -f /dev/null
