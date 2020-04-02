@@ -5,6 +5,7 @@ RUN apk update && \
     apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
     apk add libc6-compat && \
     pip install --upgrade pip && \
+    pip install --pre azure-cli && \
     pip install azure-cli && \
     apk add --no-cache wget && \
     wget https://aka.ms/downloadazcopy-v10-linux -O /tmp/azcopy.tgz && \
