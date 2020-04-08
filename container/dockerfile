@@ -1,13 +1,12 @@
 FROM hashicorp/terraform:light
 WORKDIR /
-RUN apk update && \
-    apk add python3 py3-pip && \
+RUN apk update && \    
     apk add bash jq py-pip && \
     apk add --virtual=build gcc libffi-dev musl-dev openssl-dev python-dev make && \
     apk add libc6-compat && \    
     pip install --upgrade pip && \
-    pip install mock && \
-    pip install azure-cli && \
+    pip install azure-cli==2.2.0 && \
+    pip install --upgrade azure-cli && \
     apk add --no-cache wget && \
     wget https://aka.ms/downloadazcopy-v10-linux -O /tmp/azcopy.tgz && \
 	export BIN_LOCATION=$(tar -tzf /tmp/azcopy.tgz | grep "/azcopy") && \

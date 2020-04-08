@@ -71,7 +71,7 @@ trace "Checking to apply or destroy ..."
 #if [ $DEPLOYMENT_TYPE == "delete" ]; then
 if [ -z "$DEPLOYMENT_TYPE" ]; then
     trace "Deleting Terraform ..."
-    terraform destroy -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
+    terraform destroy -target module.others -auto-approve -var "EnvironmentResourceGroupName=$EnvironmentResourceGroupName"
     az storage blob delete-batch -s $AZURE_STORAGE_CONTAINER --pattern $STORAGE_PREFIX --account-name $AZURE_STORAGE_ACCOUNT
 else
     trace "Applying Terraform ..."
